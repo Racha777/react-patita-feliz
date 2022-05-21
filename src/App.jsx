@@ -25,6 +25,19 @@ function App() {
       <main className="py-3">
         <section className="container">
           <div className="row">
+            <section>
+              <h3>Citas</h3>
+              <ul>
+                {
+                  appointments.map((appointment)=>{
+                    const {id, mascota, propietario, fecha, hora, sintomas } = appointment;
+                    return(
+                      <li key={id}>{mascota},{propietario},{fecha},{hora},{sintomas}</li>
+                    );
+                  })
+                }
+              </ul>
+            </section>
             <AppointmentsForm
             createAppointment={createAppointment}
           />
