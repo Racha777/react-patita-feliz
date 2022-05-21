@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const AppointmentsForm = () => {
-  const [ formAppointment, setFormAppointment ] = useState({
+const AppointmentsForm = ({ createAppointment }) => {
+  const [formAppointment, setFormAppointment] = useState({
     mascota: "",
     propietario: "",
     fecha: "",
@@ -9,18 +9,46 @@ const AppointmentsForm = () => {
     sintomas: "",
   });
 
-  const handleChange=(e)=>{
+  const [alert, setAlert] = useState(false);
+
+  const { mascota, propietario, fecha, hora, sintomas } = formAppointment;
+  const handleChange = (e) => {
     setFormAppointment({
-        ...formAppointment,
-        [e.target.name]: e.target.value
+      ...formAppointment,
+      [e.target.name]: e.target.value,
     });
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      [
+        mascota.trim(),
+        propietario.trim(),
+        fecha.trim(),
+        hora.trim(),
+        sintomas.trim(),
+      ].includes("")
+    ) {
+      setAlert(true);
+    } else {
+      createAppointment(formAppointment);
+      setFormAppointment({
+        mascota: "",
+        propietario: "",
+        fecha: "",
+        hora: "",
+        sintomas: "",
+      });
+      setAlert(false);
+    }
+  };
   return (
-    <section className="col-md-4">
+    <section className="d-flex flex-column align-items-center col-md-4">
       <h3 className="text-center" id="formTitle">
         🐱Generar cita🐱
       </h3>
-      <form className="text-dark rounded p-4" id="formPokemon">
+      <form className="text-dark rounded p-4" onSubmit={handleSubmit}>
         <div
           className="text-dark form-floating mb-3"
           style={{ display: "none" }}
@@ -44,6 +72,7 @@ const AppointmentsForm = () => {
             className="form-control"
             name="mascota"
             placeholder="Nombre de la Mascota"
+            value={mascota}
             onChange={handleChange}
             required
           />
@@ -58,6 +87,7 @@ const AppointmentsForm = () => {
             className="form-control"
             name="propietario"
             placeholder="Nombre del propietario"
+            value={propietario}
             onChange={handleChange}
             required
           />
@@ -72,6 +102,7 @@ const AppointmentsForm = () => {
             className="form-control"
             name="fecha"
             placeholder="Fecha"
+            value={fecha}
             onChange={handleChange}
             required
           />
@@ -86,6 +117,7 @@ const AppointmentsForm = () => {
             className="form-control"
             name="hora"
             placeholder="Hora"
+            value={hora}
             onChange={handleChange}
             required
           />
@@ -100,6 +132,7 @@ const AppointmentsForm = () => {
             className="form-control"
             name="sintomas"
             placeholder="Síntomas"
+            value={sintomas}
             onChange={handleChange}
             required
           />
@@ -111,7 +144,11 @@ const AppointmentsForm = () => {
           Crear
         </button>
       </form>
-      <div className="badge w-100" id="contenedorAlerta"></div>
+      {alert && (
+        <div className="badge bg-warning text-dark align-self-center">
+          Todos los campos son obligatorios
+        </div>
+      )}
     </section>
   );
 };
