@@ -23,7 +23,17 @@ function App() {
     slogan: "Porque es parte de nuestra familia, lo cuidamos",
   };
 
+  const updateAppointment = (appointment) => {
+    console.log('Editar');
+    const updateAppoinments=appointments.map((element)=>{
+      return appointment.id===element.id?appointment:element;
+    });
+    setApointments(updateAppoinments);
+    setAppointment({});
+  };
+
   const createAppointment = (appointment) => {
+    console.log('Crear');
     appointment.id = uuidv4();
     setApointments([...appointments, appointment]);
   };
@@ -35,9 +45,15 @@ function App() {
     setAppointment(appointment);
   };
 
-  const submitAppointment=(appointment)=>{
+  const deleteAppointment = (id) => {
+    setApointments(appointments.filter((element) => {
+      return element.id !== id;
+    }));
+  };
+
+  const submitAppointmentsFormsForm=(appointment)=>{
     if(appointment.id){
-      console.log('editar');
+      updateAppointment(appointment);
     }else{
       createAppointment(appointment);
     }
@@ -49,10 +65,11 @@ function App() {
       <main className="py-3">
         <section className="container">
           <div className="row justify-content-between gap-4">
-            <AppointmentsForm submitAppointment={submitAppointment} appointment={appointment}/>
+            <AppointmentsForm submitAppointmentsFormsForm={submitAppointmentsFormsForm} appointment={appointment}/>
             <AppointmentsAppointments
               appointments={appointments}
               readAppointment={readAppointment}
+              deleteAppointment={deleteAppointment}
             />
           </div>
         </section>

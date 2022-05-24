@@ -1,10 +1,6 @@
-const AppointmentAppointment = ({ appointment,readAppointment }) => {
+const AppointmentAppointment = ({ appointment,readAppointment,deleteAppointment }) => {
   const { id, mascota, propietario, fecha, hora, sintomas } = appointment;
   const urlWhatsapp = "https://wa.me/51999122789?text=Confirmo%20mi%20cita:";
-
-  const handleEdit=(id)=>{
-    readAppointment(id);
-  };
 
   return (
     <li
@@ -34,11 +30,16 @@ const AppointmentAppointment = ({ appointment,readAppointment }) => {
           </a>
           <button
             className="btn btn-success btn-sm"
-            onClick={()=>handleEdit(id)}
+            onClick={()=>readAppointment(id)}
             >
                 Editar
             </button>
-          <button className="btn btn-danger btn-sm">Eliminar</button>
+          <button
+            className="btn btn-danger btn-sm"
+            onClick={()=>deleteAppointment(id)}
+          >
+            Eliminar
+          </button>
         </div>
       </div>
     </li>

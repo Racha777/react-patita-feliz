@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const AppointmentsForm = ({ appointment, submitAppointment }) => {
+const AppointmentsForm = ({ appointment, submitAppointmentsFormsForm }) => {
   const [formAppointment, setFormAppointment] = useState({
     mascota: "",
     propietario: "",
@@ -33,7 +33,7 @@ const AppointmentsForm = ({ appointment, submitAppointment }) => {
     ) {
       setAlert(true);
     } else {
-      submitAppointment(formAppointment);
+      submitAppointmentsFormsForm(formAppointment);
       setFormAppointment({
         mascota: "",
         propietario: "",
