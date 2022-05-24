@@ -1,6 +1,6 @@
 import AppointmentAppointment from "./AppointmentAppointment";
 
-const AppointmentsAppointments = ({ appointments }) => {
+const AppointmentsAppointments = ({ appointments,readAppointment }) => {
   return (
     <section className="d-flex flex-column gap-3 col-md-6">
       <h3 className="text-center">Citas</h3>
@@ -13,6 +13,7 @@ const AppointmentsAppointments = ({ appointments }) => {
               <AppointmentAppointment
               key={appointment.id}
                 appointment={appointment}
+                readAppointment={readAppointment}
               />
             );
           })

@@ -1,6 +1,11 @@
-const AppointmentAppointment = ({ appointment }) => {
+const AppointmentAppointment = ({ appointment,readAppointment }) => {
   const { id, mascota, propietario, fecha, hora, sintomas } = appointment;
   const urlWhatsapp = "https://wa.me/51999122789?text=Confirmo%20mi%20cita:";
+
+  const handleEdit=(id)=>{
+    readAppointment(id);
+  };
+
   return (
     <li
       className="d-flex flex-column gap-2 list-group-item list-group-item-action"
@@ -27,7 +32,12 @@ const AppointmentAppointment = ({ appointment }) => {
           >
             Confirmar
           </a>
-          <button className="btn btn-success btn-sm">Editar</button>
+          <button
+            className="btn btn-success btn-sm"
+            onClick={()=>handleEdit(id)}
+            >
+                Editar
+            </button>
           <button className="btn btn-danger btn-sm">Eliminar</button>
         </div>
       </div>

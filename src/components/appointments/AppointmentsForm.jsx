@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const AppointmentsForm = ({ createAppointment }) => {
+const AppointmentsForm = ({ appointment, submitAppointment }) => {
   const [formAppointment, setFormAppointment] = useState({
     mascota: "",
     propietario: "",
@@ -12,6 +12,7 @@ const AppointmentsForm = ({ createAppointment }) => {
   const [alert, setAlert] = useState(false);
 
   const { mascota, propietario, fecha, hora, sintomas } = formAppointment;
+
   const handleChange = (e) => {
     setFormAppointment({
       ...formAppointment,
@@ -32,7 +33,7 @@ const AppointmentsForm = ({ createAppointment }) => {
     ) {
       setAlert(true);
     } else {
-      createAppointment(formAppointment);
+      submitAppointment(formAppointment);
       setFormAppointment({
         mascota: "",
         propietario: "",
@@ -43,10 +44,25 @@ const AppointmentsForm = ({ createAppointment }) => {
       setAlert(false);
     }
   };
+
+  useEffect(() => {
+    if (appointment.id) {
+      const { id,mascota, propietario, fecha, hora, sintomas } = appointment;
+      setFormAppointment({
+        id,
+        mascota,
+        propietario,
+        fecha,
+        hora,
+        sintomas,
+      });
+    }
+  }, [appointment]);
+
   return (
     <section className="d-flex flex-column align-items-center col-md-4">
       <h3 className="text-center" id="formTitle">
-        🐱Generar cita🐱
+        🐱{appointment.id ? "Editar" : "Crear"} cita🐱
       </h3>
       <form className="text-dark rounded p-4" onSubmit={handleSubmit}>
         <div
@@ -141,7 +157,7 @@ const AppointmentsForm = ({ createAppointment }) => {
           </label>
         </div>
         <button type="submit" className="btn btn-primary w-100" id="formButton">
-          Crear
+          {appointment.id ? "Editar" : "Crear"}
         </button>
       </form>
       {alert && (
