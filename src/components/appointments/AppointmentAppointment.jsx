@@ -1,6 +1,45 @@
+import Swal from 'sweetalert2';
 const AppointmentAppointment = ({ appointment,readAppointment,deleteAppointment }) => {
   const { id, mascota, propietario, fecha, hora, sintomas } = appointment;
   const urlWhatsapp = "https://wa.me/51999122789?text=Confirmo%20mi%20cita:";
+
+  const handleDelete=(id)=>{
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: 'btn btn-success mx-2',
+        cancelButton: 'btn btn-danger mx-2'
+      },
+      buttonsStyling: false
+    })
+    
+    swalWithBootstrapButtons.fire({
+      title: '¿Estas seguro?',
+      text: "No podras revertir esta accion!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Si, eliminala!',
+      cancelButtonText: 'No, cancela!',
+      reverseButtons: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteAppointment(id);
+        swalWithBootstrapButtons.fire(
+          'Eliminada!',
+          'La cita ha sido eliminada.',
+          'success'
+        )
+      } else if (
+        /* Read more about handling dismissals below */
+        result.dismiss === Swal.DismissReason.cancel
+      ) {
+        swalWithBootstrapButtons.fire(
+          'Cancelada',
+          'La cita esta a salvo',
+          'error'
+        )
+      }
+    })
+  };
 
   return (
     <li
@@ -36,7 +75,7 @@ const AppointmentAppointment = ({ appointment,readAppointment,deleteAppointment 
             </button>
           <button
             className="btn btn-danger btn-sm"
-            onClick={()=>deleteAppointment(id)}
+            onClick={()=>handleDelete(id)}
           >
             Eliminar
           </button>
