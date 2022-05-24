@@ -4,6 +4,7 @@ import AppointmentsForm from "./components/appointments/AppointmentsForm";
 import Header from "./components/sections/Header";
 import { v4 as uuidv4 } from "uuid";
 import AppointmentsAppointments from "./components/appointments/AppointmentsAppointments";
+import {showToast} from "./utils/SweetAlert";
 
 function App() {
   const [appointment, setAppointment] = useState({});
@@ -30,12 +31,14 @@ function App() {
     });
     setApointments(updateAppoinments);
     setAppointment({});
+    showToast('warning','Actualizado');
   };
 
   const createAppointment = (appointment) => {
     console.log('Crear');
     appointment.id = uuidv4();
     setApointments([...appointments, appointment]);
+    showToast('success','Creado');
   };
 
   const readAppointment = (id) => {
@@ -43,6 +46,7 @@ function App() {
       return element.id === id;
     });
     setAppointment(appointment);
+    showToast('info','Leido');
   };
 
   const deleteAppointment = (id) => {
