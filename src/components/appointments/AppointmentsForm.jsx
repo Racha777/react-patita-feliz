@@ -157,7 +157,7 @@ const AppointmentsForm = ({ appointment, submitAppointmentsFormsForm }) => {
             Síntomas
           </label>
         </div>
-        <button type="submit" className="btn btn-primary w-100" id="formButton">
+        <button type="submit" className="btn btn-primary w-100 fw-bold" id="formButton">
           {appointment.id ? "Editar" : "Crear"}
         </button>
       </form>
